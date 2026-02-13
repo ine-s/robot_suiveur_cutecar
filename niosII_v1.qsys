@@ -16,7 +16,7 @@
    {
       datum _sortIndex
       {
-         value = "3";
+         value = "6";
          type = "int";
       }
    }
@@ -24,7 +24,7 @@
    {
       datum _lockedAddress
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
       datum baseAddress
@@ -45,7 +45,7 @@
    {
       datum _sortIndex
       {
-         value = "7";
+         value = "1";
          type = "int";
       }
    }
@@ -53,7 +53,7 @@
    {
       datum _lockedAddress
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
       datum baseAddress
@@ -70,7 +70,7 @@
          type = "int";
       }
    }
-   element motor_L
+   element moteur_L
    {
       datum _sortIndex
       {
@@ -78,11 +78,11 @@
          type = "int";
       }
    }
-   element motor_R
+   element moteur_R
    {
       datum _sortIndex
       {
-         value = "4";
+         value = "7";
          type = "int";
       }
    }
@@ -90,7 +90,7 @@
    {
       datum _sortIndex
       {
-         value = "1";
+         value = "2";
          type = "int";
       }
    }
@@ -98,28 +98,15 @@
    {
       datum _sortIndex
       {
-         value = "2";
+         value = "3";
          type = "int";
-      }
-   }
-   element SW.s1
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-      datum baseAddress
-      {
-         value = "33566720";
-         type = "String";
       }
    }
    element onchip_memory2_0.s1
    {
       datum _lockedAddress
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
       datum baseAddress
@@ -128,11 +115,11 @@
          type = "String";
       }
    }
-   element motor_L.s1
+   element moteur_L.s1
    {
       datum _lockedAddress
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
       datum baseAddress
@@ -141,16 +128,16 @@
          type = "String";
       }
    }
-   element motor_R.s1
+   element SW.s1
    {
       datum _lockedAddress
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
       datum baseAddress
       {
-         value = "33566736";
+         value = "33566720";
          type = "String";
       }
    }
@@ -158,7 +145,7 @@
    {
       datum _lockedAddress
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
       datum baseAddress
@@ -167,11 +154,24 @@
          type = "String";
       }
    }
+   element moteur_R.s1
+   {
+      datum _lockedAddress
+      {
+         value = "0";
+         type = "boolean";
+      }
+      datum baseAddress
+      {
+         value = "33554448";
+         type = "String";
+      }
+   }
    element sdram
    {
       datum _sortIndex
       {
-         value = "6";
+         value = "4";
          type = "int";
       }
    }
@@ -190,13 +190,13 @@
  <parameter name="projectName" value="Projet_fpga_v1.qpf" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1770731561182" />
+ <parameter name="timeStamp" value="1770734278547" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
  <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
  <interface
-   name="mr"
-   internal="motor_R.external_connection"
+   name="moteur_r"
+   internal="moteur_R.external_connection"
    type="conduit"
    dir="end" />
  <interface name="sw" internal="SW.external_connection" type="conduit" dir="end" />
@@ -204,8 +204,8 @@
  <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
  <interface name="sdram_clk" internal="clocks.sdram_clk" type="clock" dir="start" />
  <interface
-   name="ml"
-   internal="motor_L.external_connection"
+   name="moteur_l"
+   internal="moteur_L.external_connection"
    type="conduit"
    dir="end" />
  <module kind="clock_source" version="13.0" enabled="1" name="clk_0">
@@ -320,7 +320,7 @@
   <parameter name="tightlyCoupledInstructionMaster2AddrWidth" value="1" />
   <parameter name="tightlyCoupledInstructionMaster3AddrWidth" value="1" />
   <parameter name="instSlaveMapParam"><![CDATA[<address-map><slave name='sdram.s1' start='0x0' end='0x2000000' /><slave name='onchip_memory2_0.s1' start='0x2001000' end='0x2002000' /><slave name='nios2_qsys_0.jtag_debug_module' start='0x2002800' end='0x2003000' /></address-map>]]></parameter>
-  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram.s1' start='0x0' end='0x2000000' /><slave name='motor_L.s1' start='0x2000000' end='0x2000010' /><slave name='onchip_memory2_0.s1' start='0x2001000' end='0x2002000' /><slave name='nios2_qsys_0.jtag_debug_module' start='0x2002800' end='0x2003000' /><slave name='SW.s1' start='0x2003000' end='0x2003010' /><slave name='motor_R.s1' start='0x2003010' end='0x2003020' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x2003020' end='0x2003028' /></address-map>]]></parameter>
+  <parameter name="dataSlaveMapParam"><![CDATA[<address-map><slave name='sdram.s1' start='0x0' end='0x2000000' /><slave name='moteur_L.s1' start='0x2000000' end='0x2000010' /><slave name='moteur_R.s1' start='0x2000010' end='0x2000020' /><slave name='onchip_memory2_0.s1' start='0x2001000' end='0x2002000' /><slave name='nios2_qsys_0.jtag_debug_module' start='0x2002800' end='0x2003000' /><slave name='SW.s1' start='0x2003000' end='0x2003010' /><slave name='jtag_uart_0.avalon_jtag_slave' start='0x2003020' end='0x2003028' /></address-map>]]></parameter>
   <parameter name="clockFrequency" value="50000000" />
   <parameter name="deviceFamilyName" value="Cyclone IV E" />
   <parameter name="internalIrqMaskSystemInfo" value="32" />
@@ -379,7 +379,7 @@
    kind="altera_avalon_pio"
    version="13.0.1.99.2"
    enabled="1"
-   name="motor_R">
+   name="moteur_R">
   <parameter name="bitClearingEdgeCapReg" value="false" />
   <parameter name="bitModifyingOutReg" value="false" />
   <parameter name="captureEdge" value="false" />
@@ -454,7 +454,7 @@
    kind="altera_avalon_pio"
    version="13.0.1.99.2"
    enabled="1"
-   name="motor_L">
+   name="moteur_L">
   <parameter name="bitClearingEdgeCapReg" value="false" />
   <parameter name="bitModifyingOutReg" value="false" />
   <parameter name="captureEdge" value="false" />
@@ -528,15 +528,15 @@
    kind="reset"
    version="13.0"
    start="clk_0.clk_reset"
-   end="motor_R.reset" />
+   end="moteur_R.reset" />
  <connection kind="reset" version="13.0" start="clk_0.clk_reset" end="SW.reset" />
  <connection
    kind="avalon"
    version="13.0"
    start="nios2_qsys_0.data_master"
-   end="motor_R.s1">
+   end="moteur_R.s1">
   <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x02003010" />
+  <parameter name="baseAddress" value="0x02000010" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -552,7 +552,7 @@
    kind="reset"
    version="13.0"
    start="nios2_qsys_0.jtag_debug_module_reset"
-   end="motor_R.reset" />
+   end="moteur_R.reset" />
  <connection
    kind="reset"
    version="13.0"
@@ -629,7 +629,7 @@
    version="13.0"
    start="clocks.sys_clk"
    end="jtag_uart_0.clk" />
- <connection kind="clock" version="13.0" start="clocks.sys_clk" end="motor_R.clk" />
+ <connection kind="clock" version="13.0" start="clocks.sys_clk" end="moteur_R.clk" />
  <connection kind="clock" version="13.0" start="clocks.sys_clk" end="SW.clk" />
  <connection
    kind="clock"
@@ -641,17 +641,17 @@
    version="13.0"
    start="clocks.sys_clk"
    end="nios2_qsys_0.clk" />
- <connection kind="clock" version="13.0" start="clocks.sys_clk" end="motor_L.clk" />
+ <connection kind="clock" version="13.0" start="clocks.sys_clk" end="moteur_L.clk" />
  <connection
    kind="reset"
    version="13.0"
    start="clk_0.clk_reset"
-   end="motor_L.reset" />
+   end="moteur_L.reset" />
  <connection
    kind="avalon"
    version="13.0"
    start="nios2_qsys_0.data_master"
-   end="motor_L.s1">
+   end="moteur_L.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x02000000" />
   <parameter name="defaultConnection" value="false" />
