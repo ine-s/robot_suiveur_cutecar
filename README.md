@@ -25,12 +25,12 @@ Le module `PWM_generation` reçoit :
 - `s_writedataL` (14 bits) : rapport cyclique pour moteur gauche.
 
 Il génère les signaux PWM différentiels :
-- `dc_motor_p_R`, `dc_motor_n_R` : paire moteur droit.
-- `dc_motor_p_L`, `dc_motor_n_L` : paire moteur gauche.
+- `dc_motor_p_R`, `dc_motor_n_R` : moteur droit.
+- `dc_motor_p_L`, `dc_motor_n_L` : moteur gauche.
 
 ## Objectif du code C en V3 (Caractérisation)
 Le programme C doit déterminer et valider par expérience :
-1. **Vitesse minimale des roues** : le seuil minimal pour que les roues commencent à tourner (moteur gelé).
+1. **Vitesse minimale des roues** : le seuil minimal pour que les roues commencent à tourner.
 2. **Vitesse minimale de déplacement** : seuil pour que le robot se déplace :
    - Sans piles (friction seule).
    - Avec piles.
@@ -44,8 +44,6 @@ Le code C modifie les valeurs envoyées aux moteurs et observe/enregistre le com
 - `lights.vhd` : top VHDL avec ports moteurs et contrôle PWM.
 - `PWM_generation.vhd` : générateur PWM pour commande moteurs.
 
-## Transition V2 → V3
-V2 validait NIOS + PIO + SDRAM.  
-V3 ajoute la caractérisation et le contrôle des moteurs DC via PWM.
+
 
 
