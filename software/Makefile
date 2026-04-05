@@ -139,10 +139,10 @@ ACDS_VERSION := 13.0sp1
 # Define path to the application ELF. 
 # It may be used by the makefile fragments so is defined before including them. 
 # 
-ELF := P:/Documents/TP13_03_v2/TP1/software/capteur_sol_seuil.elf
+ELF := niosII_v4_line_follow.elf
 
 # Paths to C, C++, and assembly source files.
-C_SRCS += P:/Documents/TP13_03_v2/TP1/software/capteur_sol_seuil.c
+C_SRCS += niosII_v4_line_follow.c
 CXX_SRCS :=
 ASM_SRCS :=
 

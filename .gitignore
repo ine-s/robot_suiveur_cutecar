@@ -17,6 +17,7 @@
 *.pin
 *.sof
 *.pof
+*.bak
 
 # Nios II software build artifacts
 software/*.elf

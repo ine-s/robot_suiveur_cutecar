@@ -3,7 +3,7 @@ USE ieee.std_logic_1164.all;
 USE ieee.std_logic_arith.all;
 USE ieee.std_logic_unsigned.all;
 
-ENTITY sysRobot IS
+ENTITY line_follow_core IS
 PORT (
     SW : IN STD_LOGIC_VECTOR(3 DOWNTO 0); -- switch
     KEY : IN STD_LOGIC_VECTOR(0 DOWNTO 0); -- reset 
@@ -20,18 +20,17 @@ PORT (
 	 LTC_ADC_SDO : IN STD_LOGIC;
 	 VCC3P3_PWRON_n : OUT STD_LOGIC
 );
-END sysRobot;
+END line_follow_core;
 
-ARCHITECTURE Structure OF sysRobot IS
+ARCHITECTURE Structure OF line_follow_core IS
 
-    -- Déclaration des signaux internes
-    SIGNAL INTER_L, INTER_R : STD_LOGIC_VECTOR(13 DOWNTO 0);
-	 SIGNAL INTERCLK_40, INTERCLK_2 : std_LOGIC;
-	 SIGNAL data3r_internal : STD_LOGIC_VECTOR(7 DOWNTO 0); -- Signaux internes pour data3r
-	 SIGNAL data0_internal : STD_LOGIC_VECTOR(7 DOWNTO 0);
-	 SIGNAL data_ready_internal : STD_LOGIC;
-	 SIGNAL niveau_internal     : STD_LOGIC_VECTOR(7 DOWNTO 0);
-	 SIGNAL vect_capt_internal  : STD_LOGIC_VECTOR(6 DOWNTO 0);
+    -- Internal aliases with V1/V2/V3-style naming for branch continuity.
+    SIGNAL cmd_motor_left, cmd_motor_right : STD_LOGIC_VECTOR(13 DOWNTO 0);
+     SIGNAL clk_40mhz, clk_2khz : std_LOGIC;
+     SIGNAL sensor_data0 : STD_LOGIC_VECTOR(7 DOWNTO 0);
+     SIGNAL sensor_data_ready : STD_LOGIC;
+     SIGNAL sensor_threshold  : STD_LOGIC_VECTOR(7 DOWNTO 0);
+     SIGNAL sensor_vector     : STD_LOGIC_VECTOR(6 DOWNTO 0);
 	 
 	 
 
@@ -123,13 +122,13 @@ BEGIN
         sdram_wire_dqm => DRAM_DQM,
         sdram_wire_ras_n => DRAM_RAS_N,
         sdram_wire_we_n => DRAM_WE_N,
-        cntrl_left_export => INTER_L, 
-        cntrl_right_export => INTER_R,
+        cntrl_left_export => cmd_motor_left, 
+        cntrl_right_export => cmd_motor_right,
 		  
-		  data_0r_external_connection_export => data0_internal,
-		  data_ready_r_external_connection_export => data_ready_internal,
-		  niveau_external_connection_export => niveau_internal,
-		  vect_cap_external_connection_export => vect_capt_internal
+          data_0r_external_connection_export => sensor_data0,
+          data_ready_r_external_connection_export => sensor_data_ready,
+          niveau_external_connection_export => sensor_threshold,
+          vect_cap_external_connection_export => sensor_vector
     );
     
     DRAM_CLK <= CLOCK_50;
@@ -139,8 +138,8 @@ BEGIN
     PORT MAP (
         clk => CLOCK_50,
         reset_n => KEY(0),
-        s_writedataL => INTER_L,  -- Mapping correct pour INTER_L
-        s_writedataR => INTER_R,  -- Mapping correct pour INTER_R
+        s_writedataL => cmd_motor_left,
+        s_writedataR => cmd_motor_right,
         dc_motor_p_R => MTRR_P,
         dc_motor_n_R => MTRR_N,
         dc_motor_p_L => MTRL_P,
@@ -151,20 +150,20 @@ BEGIN
     PORT MAP (
         inclk0 => CLOCK_50,
         areset => NOT KEY(0),
-		  c0 => INTERCLK_40,
-		  c1 => INTERCLK_2
+          c0 => clk_40mhz,
+          c1 => clk_2khz
     );
 	 
 	 
 	CAPTEUR : capteurs_sol_seuil
     PORT MAP (
-        clk => INTERCLK_40,
+          clk => clk_40mhz,
 		  reset_n => KEY(0),
-		  data_capture => INTERCLK_2,
+          data_capture => clk_2khz,
 		  
-		  data_readyr => data_ready_internal,
-		  niveau => niveau_internal,
-		  vect_capt => vect_capt_internal,
+          data_readyr => sensor_data_ready,
+          niveau => sensor_threshold,
+          vect_capt => sensor_vector,
 		  
 		  ADC_SCK  => LTC_ADC_SCK,	
 		  ADC_CONVSTr => LTC_ADC_CONVST,	
@@ -173,7 +172,7 @@ BEGIN
 		  
     );
 
-	 LED(6 DOWNTO 0) <= vect_capt_internal;
-	 LED(7) <= data_ready_internal;
+     LED(6 DOWNTO 0) <= sensor_vector;
+     LED(7) <= sensor_data_ready;
     
 END Structure;

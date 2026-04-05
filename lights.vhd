@@ -1,0 +1,71 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+
+-- Compatibility top-level used in V1/V2/V3 naming.
+-- It wraps the V4 working design core without changing behavior.
+ENTITY lights IS
+PORT (
+    SW : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+    KEY : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+    CLOCK_50 : IN STD_LOGIC;
+    LED : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+    DRAM_CLK, DRAM_CKE : OUT STD_LOGIC;
+    DRAM_ADDR : OUT STD_LOGIC_VECTOR(12 DOWNTO 0);
+    DRAM_BA : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
+    DRAM_CS_N, DRAM_CAS_N, DRAM_RAS_N, DRAM_WE_N : OUT STD_LOGIC;
+    DRAM_DQ : INOUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+    DRAM_DQM : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
+    MTRR_P, MTRR_N, MTRL_P, MTRL_N : OUT STD_LOGIC;
+    LTC_ADC_CONVST, LTC_ADC_SCK, LTC_ADC_SDI : OUT STD_LOGIC;
+    LTC_ADC_SDO : IN STD_LOGIC;
+    VCC3P3_PWRON_n : OUT STD_LOGIC
+);
+END lights;
+
+ARCHITECTURE rtl OF lights IS
+    COMPONENT line_follow_core
+    PORT (
+        SW : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
+        KEY : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+        CLOCK_50 : IN STD_LOGIC;
+        LED : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
+        DRAM_CLK, DRAM_CKE : OUT STD_LOGIC;
+        DRAM_ADDR : OUT STD_LOGIC_VECTOR(12 DOWNTO 0);
+        DRAM_BA : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
+        DRAM_CS_N, DRAM_CAS_N, DRAM_RAS_N, DRAM_WE_N : OUT STD_LOGIC;
+        DRAM_DQ : INOUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+        DRAM_DQM : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
+        MTRR_P, MTRR_N, MTRL_P, MTRL_N : OUT STD_LOGIC;
+        LTC_ADC_CONVST, LTC_ADC_SCK, LTC_ADC_SDI : OUT STD_LOGIC;
+        LTC_ADC_SDO : IN STD_LOGIC;
+        VCC3P3_PWRON_n : OUT STD_LOGIC
+    );
+    END COMPONENT;
+BEGIN
+    U_LINE_FOLLOW_CORE : line_follow_core
+    PORT MAP (
+        SW => SW,
+        KEY => KEY,
+        CLOCK_50 => CLOCK_50,
+        LED => LED,
+        DRAM_CLK => DRAM_CLK,
+        DRAM_CKE => DRAM_CKE,
+        DRAM_ADDR => DRAM_ADDR,
+        DRAM_BA => DRAM_BA,
+        DRAM_CS_N => DRAM_CS_N,
+        DRAM_CAS_N => DRAM_CAS_N,
+        DRAM_RAS_N => DRAM_RAS_N,
+        DRAM_WE_N => DRAM_WE_N,
+        DRAM_DQ => DRAM_DQ,
+        DRAM_DQM => DRAM_DQM,
+        MTRR_P => MTRR_P,
+        MTRR_N => MTRR_N,
+        MTRL_P => MTRL_P,
+        MTRL_N => MTRL_N,
+        LTC_ADC_CONVST => LTC_ADC_CONVST,
+        LTC_ADC_SCK => LTC_ADC_SCK,
+        LTC_ADC_SDI => LTC_ADC_SDI,
+        LTC_ADC_SDO => LTC_ADC_SDO,
+        VCC3P3_PWRON_n => VCC3P3_PWRON_n
+    );
+END rtl;
