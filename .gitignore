@@ -1,0 +1,27 @@
+# Quartus generated folders
+/db/
+/incremental_db/
+/output_files/
+
+# Qsys editor metadata
+.qsys_edit/
+
+# Quartus generated reports and messages
+*.rpt
+*.qmsg
+*.summary
+
+# Generated simulation and netlist collateral
+*.jdi
+*.smsg
+*.pin
+*.sof
+*.pof
+
+# Nios II software build artifacts
+software/*.elf
+software/*.srec
+software/*.map
+software/*.objdump
+software/obj/
+software/BSP/obj/
